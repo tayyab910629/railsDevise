@@ -1,0 +1,76 @@
+
+<div class="row">
+    <div class="col-3">
+        <div class="list-group">
+            <%= link_to dashboard_path, class: "list-group-item list-group-item-action" do %>
+                <i class="fas fa-tachometer-alt me-2"></i>Overview
+            <% end %>
+            <%= link_to transaction_path, class: "list-group-item list-group-item-action #{'active' if current_page?(transaction_path)}" do %>
+                <i class="fas fa-money-check-alt me-2"></i>Transactions
+            <% end %>
+            <%= link_to transaction_path, class: "list-group-item list-group-item-action" do %>
+                <i class="fas fa-wallet me-2"></i>Accounts
+            <% end %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "list-group-item list-group-item-action mt-4" do %>
+                <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+            <% end %>
+        </div>
+    </div>
+    <div class="col-9">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Merchant Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @transaction.each do |transaction| %>
+                    <tr>
+                        <td><%= transaction.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+                        <td><%= transaction.merchant_name %></td>
+                        <td class="text-danger" ><%= number_to_currency(transaction.amount, unit: "$") %></td>
+                        <td><%= transaction.category %></td>
+                       <td > <%= button_to 'Delete', destroy_transaction_path(transaction), class:"btn btn-danger",  method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+                        
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<%= form_with(url: savedtrx_path, local: true, html: {class: "modal fade", id: "transactionModal", tabindex: "-1", 'aria-labelledby' => 'transactionModalLabel', 'aria-hidden' => 'true' }) do |form| %>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <%= form.label :amount, class: 'form-label' %>
+                    <%= form.number_field :amount, class: 'form-control' %>
+                </div>
+               
+                <div class="mb-3">
+                    <%= form.label :merchant_name, 'Merchant Name', class: 'form-label' %>
+                    <%= form.text_field :merchant_name, class: 'form-control' %>
+                </div>
+                <div class="mb-3">
+                    <%= form.label :category, class: 'form-label' %>
+                    <%= form.text_field :category, class: 'form-control' %>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= form.submit "Save changes", class: 'btn btn-primary' %>
+            </div>
+        </div>
+    </div>
+<% end %>

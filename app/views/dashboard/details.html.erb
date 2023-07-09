@@ -1,0 +1,69 @@
+
+
+<body>
+<div class="row">
+            <div class="col-3">
+                <div class="list-group">
+                    <%= link_to dashboard_path, class: "list-group-item list-group-item-action #{'active' if current_page?(dashboard_path)}" do %>
+                        <i class="fas fa-tachometer-alt me-2"></i>Overview
+                    <% end %>
+                    <%= link_to transaction_path , class: "list-group-item list-group-item-action #{'active' if current_page?(transaction_path)}" do %>
+                        <i class="fas fa-money-check-alt me-2"></i>Transactions
+                    <% end %>
+                    <%= link_to transaction_path , class: "list-group-item list-group-item-action #{'active' if current_page?(transaction_path)}" do %>
+                        <i class="fas fa-wallet me-2"></i>Accounts
+                    <% end %>
+                    <%= link_to destroy_user_session_path, method: :delete, class: "list-group-item list-group-item-action mt-4" do %>
+                        <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+                    <% end %>
+                </div>
+            </div>
+            <div class="col-9">
+                <!-- Dashboard content goes here -->
+                <%= pie_chart @piechart %>
+
+<h3>Top 5 Spending Areas</h3>
+<ul>
+  <% @piechart.each do |category, amount| %>
+    <li><strong><%= category %>:</strong> <%= number_to_currency(amount) %></li>
+  <% end %>
+</ul>
+
+
+                <%= yield %>
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <%= form_with(url: savedtrx_path, local: true, html: {class: "modal fade", id: "transactionModal", tabindex: "-1", 'aria-labelledby' => 'transactionModalLabel', 'aria-hidden' => 'true' }) do |form| %>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <%= form.label :amount, class: 'form-label' %>
+                        <%= form.number_field :amount, class: 'form-control' , value: "50" %>
+                    </div>
+                
+                    <div class="mb-3">
+                        <%= form.label :merchant_name, 'Merchant Name', class: 'form-label' %>
+                        <%= form.text_field :merchant_name, class: 'form-control' , value: "Zara" %>
+                    </div>
+                    <div class="mb-3">
+                        <%= form.label :category, class: 'form-label' %>
+                        <%= form.text_field :category, class: 'form-control', value: "Food" %>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <%= form.submit "Save changes", class: 'btn btn-primary' %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</body>

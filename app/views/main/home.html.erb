@@ -1,0 +1,34 @@
+<body>
+    <header class="bg-light p-3">
+        <h1 class="text-center">Welcome to Expense Manager</h1>
+    </header>
+
+    <section class="py-5 text-center">
+        <h2>About Expense Manager</h2>
+        <p class="px-5">Expense Manager is your one-stop solution for tracking and managing your financial transactions. Keep track of your spending habits, set budgets, and make financial plans with ease. Join today and gain full control over your finances!</p>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-secondary" %>
+    </section>
+
+    <section class="py-5 bg-light text-center">
+        <h2>Why Choose Expense Manager?</h2>
+        <div class="row px-5">
+            <div class="col">
+                <h3>Easy Tracking</h3>
+                <p>Keep an eye on your expenses, income, and overall budget with our user-friendly interface.</p>
+            </div>
+            <div class="col">
+                <h3>Secure</h3>
+                <p>Your financial data is safe with us. We prioritize security and ensure that your details are kept confidential.</p>
+            </div>
+            <div class="col">
+                <h3>24/7 Support</h3>
+                <p>Got an issue or need help with something? Our support team is available around the clock to assist you.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="p-3 bg-dark text-light text-center">
+        <p>&copy; <%= Time.now.year %> Expense Manager. All Rights Reserved.</p>
+    </footer>
+</body>
