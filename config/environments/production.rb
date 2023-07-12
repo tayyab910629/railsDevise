@@ -5,6 +5,7 @@ Rails.application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
+  config.action_mailer.default_url_options
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -15,7 +16,7 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.action_mailer.default_url_options = { host: 'devise91-3f5b3e12ffbb.herokuapp.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'devise91-3f5b3e12ffbb.herokuapp.com', port: 46245 }
 
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
